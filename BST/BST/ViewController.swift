@@ -1,123 +1,31 @@
-# awesomeTip
-## 时间复杂度
-O(1)常数
-O(n)
-O(n^2)
-O(logn) 对数阶时间复杂度
-```
-func logn(n) {
-    let i = 1;
-    while(i < n) {
-        i = i * 2
+//
+//  ViewController.swift
+//  BST
+//
+//  Created by helios on 2020/3/2.
+//  Copyright © 2020 helios. All rights reserved.
+//
+
+import UIKit
+
+class ViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        let items: Array<String> = ["A", "B", "D", "", "", "E", "", "", "C", "","F", "", ""]
+                let generalBinaryTree: Tree = Tree(items)
+                
+                //二叉树的遍历
+        generalBinaryTree.preorderTraversal(generalBinaryTree.root)
+        generalBinaryTree.inorderTraversal(generalBinaryTree.root)
+        generalBinaryTree.postOrderTraversal(generalBinaryTree.root)
+        generalBinaryTree.levelOrder(generalBinaryTree.root)
+        
     }
-    return i
+    
+
 }
-```
-是log2n 以2为底n的对数 底数可变就是logn
-O(n*logn)
 
-## 给出一个整数数组和一个目标值，判断数组中是否有两个数之和等于目标值
-利用集合,遍历数组用集合每次保存当前值 假如集合中已经有一个数等于目标值减去当前值 则证明之前的遍历一定有一个数与当前值之和等于目标值 时间复杂度 O(n)
-```
-    private func twoSum(array: [Int], target: Int) -> Bool {
-        var set = Set<Int>()
-        for num in array {
-            if set.contains(target - num) {
-                return true
-            }
-            set.insert(num)
-        }
-        return false
-    }
-```
-## 给定一个整型数组中有且仅有两个数之和等于目标值，求这两个数在数组中的序号 为了获得序号使用字典
-```
-    private func twoSumReturnNum(array: [Int], target: Int) -> [Int] {
-        var dic = [Int : Int]()
-        for (i, num) in array.enumerated() {
-            if let temp = dic[target - num] {
-                return [temp, i]
-            } else 
-                dic[num] = i
-            }
-        }
-        fatalError("no valid output")
-    }
-
-```
-## 各位相加 给定一个非负整数 num，反复将各个位上的数字相加，直到结果为一位数
-## 输入: 178 
-## 输出: 7
-## 解释: 各位相加的过程为：1 + 7 + 8 = 16, 1 + 6 = 7。 由于 7 是一位数，所以返回
-```
-    private func addDigits(_ num: Int) -> Int {
-        var result = 0
-        var num = num
-        while true {
-            while num > 0 {
-                let digits = num % 10
-                result += digits
-                num = num / 10
-            }
-            if result < 10 {
-                return result
-            } else {
-                num = result
-                result = 0
-            }
-        }
-    }
-```
-##   给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。 请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。
-```
-    private func findMedianSortedArray(_ nums1: [Int], _ nums2: [Int]) -> Double {
-        var allArr: NSMutableArray = NSMutableArray(array: nums1)
-        allArr.addObjects(from: nums2)
-        allArr.sort { (obj1, obj2) -> ComparisonResult in
-            let num1: Int = obj1 as! Int
-            let num2: Int = obj2 as! Int
-            if num1 > num2 {
-                return .orderedDescending
-            } else {
-                return .orderedAscending
-            }
-        }
-        if ((allArr.count-1)%2) == 0{
-            return allArr[(allArr.count-1)/2] as! Double
-        } else {
-            let flag = (allArr.count-1)/2
-            return Double((allArr[flag] as! Int)+(allArr[flag+1] as! Int))/2
-        }
-    }
-```
-## 给出一个链表和一个值x，要求将链表中所有小于x的值放到左边，所有大于x的值放到右边，并且原链表的节点顺序不能变 例如：1->5->3->2->4->2，给定 x=3 ，则返回为 1->2->2->5->3->4
-```
-    func partition(_ head : ListNode?, _ x : Int)->ListNode? {
-        let prevDummy : ListNode = ListNode(0), postDummy = ListNode(0)
-        var prev = prevDummy, post = postDummy
-            
-        var node = head
-            
-        while node != nil {
-            if node!.val < x {
-                prev.next = node
-                prev = node!
-            } else {
-                post.next = node
-                post = node!
-            }
-            node = node!.next
-        }
-        //防止构成环
-        post.next = nil
-        //拼接左右链表
-        prev.next = postDummy.next
-        return prevDummy.next
-    }
-```
-### 树的基础实现以及广度优先遍历
-#### 基础实现
-```
 class TreeNode {
     var val: String
     var left: TreeNode?
@@ -167,9 +75,6 @@ class Tree {
         }
         return CheckBSTNode(node.left, min: min, max: node.val) && CheckBSTNode(node.right, min: node.val, max: max)
     }
-```
-#### 二叉树遍历
-```
     
     //二叉树遍历 前序、中序、后序遍历，以及层次遍历即广度优先遍历
     //前序遍历 preorderTraversal.png 根节点->左子树->右子树
@@ -318,5 +223,4 @@ class BinaryTree {
         }
     }
 }
-```
-树的相关 demo
+
